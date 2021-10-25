@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exemple</title>
+	
+	<style>  
+body {
+  background: beige;
+}
+
+header {
+  background: red;
+}
+
+footer {
+  background: blue;
+}
+
+#content {
+  background: yellow;
+  width: 70%;
+  height: 100px;
+  margin: 50px auto;
+  border: 1px solid orange;
+  padding: 20px;
+}
+
+    </style> 
+	
+	<script src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>  
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+   
+
+
+   
+   <script>  
+    $('#print').click(function() {
+
+  var w = document.getElementById("content").offsetWidth;
+  var h = document.getElementById("content").offsetHeight;
+  html2canvas(document.getElementById("content"), {
+    dpi: 300, // Set to 300 DPI
+    scale: 3, // Adjusts your resolution
+    onrendered: function(canvas) {
+      var img = canvas.toDataURL("image/jpeg", 1);
+      var doc = new jsPDF('L', 'px', [w, h]);
+      doc.addImage(img, 'JPEG', 0, 0, w, h);
+      doc.save('sample-file.pdf');
+    }
+  });
+});
+</script>  
+
+   
+  </head>
+  
+  <body>
+    <header>This is the header</header>
+    <div id="content">
+      This is the element you only want to capture
+    </div>
+    <button id="print">Download Pdf</button>
+    <footer>This is the footer</footer>
+  </body>
+</html>
